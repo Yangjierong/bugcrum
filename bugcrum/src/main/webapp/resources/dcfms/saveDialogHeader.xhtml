@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="widgetVar" required="true" />
+		<composite:attribute name="saveMethod" method-signature="void action()" />
+		<composite:attribute name="title" default="Create" />
+		<composite:attribute name="update" required="false" />
+		<composite:attribute name="startValidate" required="false" />
+	</composite:interface>
+
+	<composite:implementation>
+		<table style="width: 100%">
+			<tr>
+				<td align="left"><p:outputLabel value="#{cc.attrs.title}" /></td>
+				<td align="right"><p:commandButton id="saveButton" value="#{i18n.save}" actionListener="#{cc.attrs.saveMethod}" update="#{cc.attrs.update}" onstart="#{cc.attrs.startValidate}" onsuccess="PF('#{cc.attrs.widgetVar}').hide()" /> <p:commandButton id="cancelButton" value="#{i18n.cancel}"
+						onclick="PF('#{cc.attrs.widgetVar}').hide();" /></td>
+			</tr>
+		</table>
+	</composite:implementation>
+
+</f:view>

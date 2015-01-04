@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Bugzilla Scrum Integration</title>
+</h:head>
+<h:body>
+	<h:form id="msgForm">
+		<p:messages id="msgs" showDetail="false" closable="true" />
+	</h:form>
+
+	<h:form id="topForm">
+
+		<p:panel header="Select a Product" style="font-size:10px; margin-bottom:10px;">
+			<h:panelGrid columns="4" cellpadding="5">
+				<p:outputLabel for="classification" value="Classification: " />
+				<p:selectOneMenu id="classification" value="#{bugViewBean.classificationId}" style="width:150px">
+					<p:ajax listener="#{bugViewBean.onClassificationChange}" update="product" />
+					<f:selectItem itemLabel="Select Classification" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{bugViewBean.classifications}" var="c" itemValue="#{c.id}" itemLabel="#{c.name}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="product" value="Product: " />
+				<p:selectOneMenu id="product" value="#{bugViewBean.productId}" style="width:150px">
+					<p:ajax listener="#{bugViewBean.onProductChange}" update=":bugForm:component :bugForm:bugList :viewSprintform :burnDownChartForm1" />
+					<f:selectItem itemLabel="Select Product" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{bugViewBean.products}" var="product" itemValue="#{product.id}" itemLabel="#{product.name}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</p:panel>
+
+	</h:form>
+
+	<ui:include src="layout-bug.xhtml" />
+
+	<ui:include src="layout-sprint.xhtml" />
+
+	<ui:include src="sprint-create.xhtml" />
+
+	<ui:include src="viewBurnDownChart.xhtml" />
+
+</h:body>
+</html>

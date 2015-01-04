@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:dcfms="http://java.sun.com/jsf/composite/dcfms">
+	<ui:composition>
+
+		<p:panel id="burnDownChart" header="Burn Down Chart" style="font-size:10px; margin-bottom:10px;">
+			<h:form id="burnDownChartForm1">
+				<p:selectOneMenu id="sprintUser" value="#{bugViewBean.userId}" label="User">
+					<f:selectItem itemValue="-1" itemLabel="- Select User -" />
+					<f:selectItems value="#{bugViewBean.sprintUsers}" var="user" itemValue="#{user.id}" itemLabel="#{user.realName}" />
+					<p:ajax event="change" listener="#{bugViewBean.onUserChange}" />
+				</p:selectOneMenu>
+
+				<p:commandButton id="viewBurnDownChart" value="View BurnDown Chart" title="View" disabled="#{empty bugViewBean.sprintList or bugViewBean.sprintId lt 0}" actionListener="#{bugViewBean.viewBurnDownChart}" update=":burnDownChartForm2" />
+			</h:form>
+
+			<h:form id="burnDownChartForm2">
+				<p:panel id="pp" rendered="#{bugViewBean.chartDataModel != null}">
+					<p:chart id="burnDownChart" type="line" model="#{bugViewBean.chartDataModel}" style="height:400px; width:700px;" />
+				</p:panel>
+			</h:form>
+		</p:panel>
+
+	</ui:composition>
+
+</f:view>

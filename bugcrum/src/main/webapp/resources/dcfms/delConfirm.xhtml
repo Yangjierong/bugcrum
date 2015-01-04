@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="widgetVar" required="true" />
+		<composite:attribute name="listener" method-signature="void action()" required="true" />
+		<composite:attribute name="update" />
+		<composite:attribute name="message" default="#{i18n.delete_confirm}" />
+		<composite:attribute name="styleClass" default="confirmDlg" />
+		<composite:attribute name="width" default="350" />
+	</composite:interface>
+
+	<composite:implementation>
+		<p:confirmDialog styleClass="#{cc.attrs.styleClass}" modal="false" widgetVar="#{cc.attrs.widgetVar}" width="#{cc.attrs.width}" severity="alarm">
+			<f:facet name="message">
+				<h:outputText value="#{cc.attrs.message}" />
+			</f:facet>
+			<p:outputPanel>
+				<h:form>
+					<p:commandButton value="#{i18n.label_yes}" widgetVar="yesBtnWidget_#{cc.id}" onclick="PF('yesBtnWidget_#{cc.id}').disable();PF('noBtnWidget_#{cc.id}').disable()" oncomplete="PF('yesBtnWidget_#{cc.id}').enable();PF('noBtnWidget_#{cc.id}').enable();PF('#{cc.attrs.widgetVar}').hide();" 
+						actionListener="#{cc.attrs.listener}" update="#{cc.attrs.update}" style="text-align: center;" />
+					<p:commandButton widgetVar="noBtnWidget_#{cc.id}" value="#{i18n.label_no}" onclick="PF('#{cc.attrs.widgetVar}').hide();" style="text-align: center;" />
+				</h:form>
+			</p:outputPanel>
+		</p:confirmDialog>
+	</composite:implementation>
+
+</f:view>

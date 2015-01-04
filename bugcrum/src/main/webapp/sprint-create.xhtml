@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:dcfms="http://java.sun.com/jsf/composite/dcfms">
+	<ui:composition>
+
+		<h:form id="createSprintform">
+			<p:dialog id="createSprintDialog" closable="true" modal="true" widgetVar="createSprintDlgWidget" resizable="true" width="800" height="500">
+
+				<p:messages id="wsMessages" showDetail="false" closable="true" />
+				<p:panelGrid id="createSprintPanel" columns="2" style="width: 100%; border:0px;">
+
+					<f:facet name="header">
+						<p:outputLabel value="Sprint" style="align:center" />
+					</f:facet>
+
+					<p:outputLabel for="sprintName" value="Sprint Name* : " />
+					<p:inputText id="sprintName" value="#{bugViewBean.sprint.name}" maxlength="255" />
+
+					<p:outputLabel for="description" value="Description : " />
+					<p:inputTextarea id="description" value="#{bugViewBean.sprint.description}" rows="3" maxlength="1000" autoResize="false" />
+
+					<p:outputLabel for="startDate" value="Start Date* : " />
+					<p:calendar id="startDate" value="#{bugViewBean.sprint.startDate}" timeZone="GMT+8" pattern="yyyy-MM-dd" style="width:100px;" navigator="true" showOn="button" readonlyInput="true" />
+
+					<p:outputLabel for="endDate" value="End Date* : " />
+					<p:calendar id="endDate" value="#{bugViewBean.sprint.endDate}" timeZone="GMT+8" pattern="yyyy-MM-dd" style="width:100px;" navigator="true" showOn="button" readonlyInput="true" />
+
+					<p:outputLabel for="goals" value="Goals : " />
+					<p:inputTextarea id="goals" value="#{bugViewBean.sprint.goals}" rows="3" maxlength="1000" autoResize="false" />
+				</p:panelGrid>
+
+				<p:commandButton id="saveButton" value="Save" actionListener="#{bugViewBean.saveSprint}" process="@form" update=":viewSprintform :createSprintform:wsMessages :createSprintform:createSprintPanel" />
+				<p:commandButton id="cancelButton" value="Cancel" onclick="PF('createSprintDlgWidget').hide();" />
+
+			</p:dialog>
+		</h:form>
+
+		<dcfms:delConfirm widgetVar="deleteSpringWidget" listener="#{bugViewBean.deleteSprint}" update=":viewSprintform" message="Are you sure to delete this Sprint?" />
+		<dcfms:delConfirm widgetVar="deleteSpringBugWidget" listener="#{bugViewBean.removeBugFromSprint}" update=":viewSprintform:sprintsDataTable :bugForm:bugList :viewSprintform:sprintTime" message="Are you sure to remove this Task?" />
+
+	</ui:composition>
+</f:view>

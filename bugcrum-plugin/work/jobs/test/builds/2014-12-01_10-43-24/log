@@ -1,0 +1,53 @@
+Started by user [8mha:AAAAlh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzOEgYu/dLi1CL9vNKcHACFIKlWvwAAAA==[0manonymous
+Building in workspace e:\Projects\bugzilla-scrum\work\jobs\test\workspace
+Hello, wwwwwwwwwwwwwwwwww!
+groovyFile: /e:/Projects/bugzilla-scrum/target/classes/deployNotification.groovy
+Exception: startup failed:
+General error during conversion: No suitable ClassLoader found for grab
+
+java.lang.RuntimeException: No suitable ClassLoader found for grab
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+	at groovy.grape.GrapeIvy.chooseClassLoader(GrapeIvy.groovy:175)
+	at groovy.grape.GrapeIvy$chooseClassLoader.callCurrent(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+	at groovy.grape.GrapeIvy.grab(GrapeIvy.groovy:241)
+	at groovy.grape.Grape.grab(Grape.java:141)
+	at groovy.grape.GrabAnnotationTransformation.visit(GrabAnnotationTransformation.java:283)
+	at org.codehaus.groovy.transform.ASTTransformationVisitor$3.call(ASTTransformationVisitor.java:308)
+	at org.codehaus.groovy.control.CompilationUnit.applyToSourceUnits(CompilationUnit.java:846)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:550)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:526)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:503)
+	at groovy.lang.GroovyClassLoader.doParseClass(GroovyClassLoader.java:302)
+	at groovy.lang.GroovyClassLoader.parseClass(GroovyClassLoader.java:281)
+	at groovy.lang.GroovyShell.parseClass(GroovyShell.java:731)
+	at groovy.lang.GroovyShell.parse(GroovyShell.java:743)
+	at groovy.lang.GroovyShell.evaluate(GroovyShell.java:578)
+	at groovy.lang.GroovyShell.evaluate(GroovyShell.java:618)
+	at groovy.lang.GroovyShell.evaluate(GroovyShell.java:589)
+	at com.accentrix.ci.bugzillascrum.BugzillaTaskBuilder.evaluate(BugzillaTaskBuilder.java:200)
+	at com.accentrix.ci.bugzillascrum.BugzillaTaskBuilder.runGroovy(BugzillaTaskBuilder.java:146)
+	at com.accentrix.ci.bugzillascrum.BugzillaTaskBuilder.perform(BugzillaTaskBuilder.java:103)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:770)
+	at hudson.model.Build$BuildExecution.build(Build.java:199)
+	at hudson.model.Build$BuildExecution.doRun(Build.java:160)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:533)
+	at hudson.model.Run.execute(Run.java:1759)
+	at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:43)
+	at hudson.model.ResourceController.execute(ResourceController.java:89)
+	at hudson.model.Executor.run(Executor.java:240)
+
+1 error
+
+Finished: SUCCESS

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <com.accentrix.ci.bugzillascrum.BugzillaTaskBuilder plugin="bugzilla-scrum@1.0-SNAPSHOT">
+      <productName>Asset Management</productName>
+      <sendTos>jyang@accentrix.com</sendTos>
+    </com.accentrix.ci.bugzillascrum.BugzillaTaskBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

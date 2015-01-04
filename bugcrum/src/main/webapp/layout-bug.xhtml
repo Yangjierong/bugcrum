@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:dcfms="http://java.sun.com/jsf/composite/dcfms">
+	<ui:composition>
+
+		<h:form id="bugForm">
+			<p:panel header="Bugs" style="font-size:10px; margin-bottom:10px;">
+
+				<h:panelGrid columns="8" cellpadding="5">
+
+					<p:selectCheckboxMenu id="status" value="#{bugViewBean.selectedBugStatus}" label="Status">
+						<f:selectItems value="#{bugViewBean.bugStatuses}" var="b" itemValue="#{b.value}" itemLabel="#{b.value}" />
+					</p:selectCheckboxMenu>
+
+					<p:outputLabel for="component" value="Component:" />
+					<p:selectManyCheckbox id="component" value="#{bugViewBean.selectedComponentIds}" layout="grid" columns="3">
+						<f:selectItems value="#{bugViewBean.components}" var="c" itemValue="#{c.id}" itemLabel="#{c.name}" />
+					</p:selectManyCheckbox>
+
+					<p:outputLabel for="searchDesc" value="Desc:" />
+					<p:inputText id="searchDesc" value="#{bugViewBean.searchDesc}" />
+
+					<p:commandButton actionListener="#{bugViewBean.search}" update=":bugForm:bugList totalTime" id="Search" value="Search" />
+
+					<p:outputLabel for="totalTime" value="Total Est Time:" />
+					<p:outputLabel id="totalTime" value="#{bugViewBean.totalTime}" />
+				</h:panelGrid>
+
+				<p:dataTable id="bugList" var="bug" lazy="true" paginator="true" rows="10" value="#{bugViewBean.bugsModel}" widgetVar="bugListWidget" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" emptyMessage="no Records">
+					<p:column headerText="" style="text-align: center; width: 7%;">
+						<p:commandButton id="addToSprintButton" actionListener="#{bugViewBean.addToSprint(bug)}" icon="ui-icon-arrowthick-1-s" disabled="#{bugViewBean.isDisabled(bug)}" update=":viewSprintform:sprintsDataTable :bugForm:bugList:addToSprintButton :viewSprintform:sprintTime"
+							title="add this bug/task to current sprint" />
+					</p:column>
+					<p:column id="bugId" headerText="Bug ID" sortBy="#{bug.id}" width="10%">
+						<a href="http://bugzillasit.accentrix.com:83/bugzilla/show_bug.cgi?id=#{bug.id}" target="_blank"><h:outputText value="#{bug.id}" /></a>
+					</p:column>
+					<p:column id="status" headerText="Status" sortBy="#{bug.status}" width="13%">
+						<h:outputText value="#{bug.status}" />
+					</p:column>
+					<p:column id="priority" headerText="Priority" sortBy="#{bug.priority}" width="10%">
+						<h:outputText value="#{bug.priority}" />
+					</p:column>
+					<p:column id="severity" headerText="Severity" sortBy="#{bug.severity}" width="10%">
+						<h:outputText value="#{bug.severity}" />
+					</p:column>
+					<p:column id="estimatedTime" headerText="Estimated Time" sortBy="#{bug.estimatedTime}" width="10%">
+						<h:outputText value="#{bug.estimatedTime}" />
+					</p:column>>
+					<p:column id="remainingTime" headerText="Remaining Time" sortBy="#{bug.remainingTime}" width="10%">
+						<h:outputText value="#{bug.remainingTime}" />
+					</p:column>
+					<p:column id="shortDesc" headerText="Description" width="40%">
+						<h:outputText value="#{bug.shortDesc}" />
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+
+</f:view>

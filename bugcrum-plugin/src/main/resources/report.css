@@ -1,0 +1,66 @@
+.table{
+font-size:11px;
+font-family: Arial, Helvetica, sans-serif;
+border: 1px solid #666666;
+width:100%;
+text-align: center;
+vertical-align: middle;
+}
+.head{
+background-color: #999;
+width:50px;
+height:30px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-top-style: none;
+border-bottom-style: solid;
+border-left-style: solid;
+border-top-color: #666666;
+border-right-color: #666666;
+border-bottom-color: #666666;
+border-left-color: #666666;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+font-weight: bold;
+color: #fff;
+text-align:center;
+}
+.td{
+height:50px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-top-style: none;
+border-bottom-style: solid;
+border-left-style: solid;
+border-top-color: #666666;
+border-right-color: #666666;
+border-bottom-color: #666666;
+border-left-color: #666666;
+}
+.backlog{
+width:160px;
+height:120px;
+background-color:#B9DCEF; 
+}
+.task{
+width:112px;
+height:93px;
+background-color:#FFEEA6; 
+float:left;
+margin-right: 5px;
+margin-bottom:5px;
+}
+.user{
+background-color:#FFCC00; 
+width:80%; 
+height:20px; 
+text-align:center; 
+margin-top:5px;
+}
+.effort{
+background-color:#FFDD00; 
+width:80%; 
+height:20px; 
+text-align:center; 
+margin-top:5px;
+}
