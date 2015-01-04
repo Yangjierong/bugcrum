@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -43,6 +44,7 @@ import com.accentrix.bugcrum.service.SprintService;
 import com.accentrix.nttca.dcms.common.cache.ThreadCacheAdministrator;
 import com.accentrix.nttca.dcms.common.exception.annotation.WatchException;
 import com.accentrix.nttca.dcms.common.exception.handler.DefaultExceptionHandler;
+import com.accentrix.nttca.dcms.common.util.CookieUtil;
 import com.accentrix.nttca.dcms.common.util.UIUtil;
 
 @ManagedBean
@@ -51,6 +53,8 @@ import com.accentrix.nttca.dcms.common.util.UIUtil;
 @WatchException(update = "msgForm:msgs", exceptionHandler = DefaultExceptionHandler.class)
 public class BugViewBean implements Serializable {
 
+    private static final String PRODUCT_ID = "productId";
+    private static final String CLASSIFICATION_ID = "classificationId";
     private static final double DEFAULT_EFFORT = 8d;
     private static final long ONE_DATE = 1000L * 60 * 60 * 24;
     private static final long serialVersionUID = 1L;
@@ -138,6 +142,24 @@ public class BugViewBean implements Serializable {
         log.info("init");
 
         classifications = classificationService.findAll();
+
+        String cIdStr = CookieUtil.getCookie(CLASSIFICATION_ID);
+        log.info("CLASSIFICATION_ID: {}", cIdStr);
+        if (StringUtils.isNotBlank(cIdStr)) {
+            classificationId = Integer.valueOf(cIdStr);
+
+            Classification classification = new Classification();
+            classification.setId(classificationId);
+            products = productService.findAllByClassification(classification);
+
+            String pidStr = CookieUtil.getCookie(PRODUCT_ID);
+            log.info("PRODUCT_ID: {}", pidStr);
+            if (StringUtils.isNotBlank(pidStr)) {
+                productId = Integer.valueOf(pidStr);
+            }
+
+        }
+
         bugStatuses = bugStatusService.findAll();
 
         bugsModel = new LazyBugViewDataModel(productId, selectedComponentIds, selectedBugStatus);
@@ -219,6 +241,8 @@ public class BugViewBean implements Serializable {
     public void onClassificationChange() {
         log.info("classificationId: {}", classificationId);
         if (classificationId != null) {
+            CookieUtil.addCookie(CLASSIFICATION_ID, "" + classificationId);
+
             Classification classification = new Classification();
             classification.setId(classificationId);
             products = productService.findAllByClassification(classification);
@@ -238,6 +262,8 @@ public class BugViewBean implements Serializable {
         log.info("productId: {}", productId);
 
         if (productId != null) {
+            CookieUtil.addCookie(PRODUCT_ID, "" + productId);
+
             Product pro = productService.findOne(productId);
             components = componentService.findAllByProduct(pro);
             log.info("components size: {}", components.size());

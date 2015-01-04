@@ -15,8 +15,7 @@
 								<p:ajax event="change" listener="#{bugViewBean.onSprintChange}" update="editSprintButton :viewSprintform:sprintsDataTable :burnDownChartForm1 sprintTime"></p:ajax>
 							</p:selectOneMenu>
 
-							<p:commandButton style="text-align: center; margin-right:8px; vertical-align: 8px;" id="refreshButton" icon="ui-icon-refresh" title="Refresh" actionListener="#{bugViewBean.onSprintChange}"
-								update="editSprintButton :viewSprintform:sprintsDataTable :burnDownChartForm1 sprintTime" />
+							<p:commandButton style="text-align: center; margin-right:8px; vertical-align: 8px;" id="refreshButton" icon="ui-icon-refresh" title="Refresh" actionListener="#{bugViewBean.onSprintChange}" update="editSprintButton :viewSprintform:sprintsDataTable :burnDownChartForm1 sprintTime" />
 
 							<p:commandButton style="text-align: center; margin-right:8px; vertical-align: 8px;" id="editSprintButton" icon="ui-icon-pencil" disabled="#{empty bugViewBean.sprintList or bugViewBean.sprintId lt 0 or bugViewBean.sprintId eq null }" title="Edit Sprint"
 								actionListener="#{bugViewBean.initCreateSprint('edit')}" oncomplete="PF('createSprintDlgWidget').show();" update=":createSprintform" />
