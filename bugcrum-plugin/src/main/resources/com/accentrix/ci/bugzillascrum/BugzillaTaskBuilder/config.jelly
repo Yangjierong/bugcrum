@@ -1,18 +1,24 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <!--
-    This jelly script is used for per-project configuration.
+	<!-- This jelly script is used for per-project configuration. See global.jelly for a general discussion about jelly script. -->
 
-    See global.jelly for a general discussion about jelly script.
-  -->
+	<!-- Creates a text field that shows the value of the "name" property. When submitted, it will be passed to the corresponding constructor parameter. -->
+	<f:entry title="Product Name" field="productName">
+		<f:textbox />
+	</f:entry>
+	<f:entry title="Send Notification To" field="sendTos">
+		<f:textbox />
+	</f:entry>
 
-  <!--
-    Creates a text field that shows the value of the "name" property.
-    When submitted, it will be passed to the corresponding constructor parameter.
-  -->
-  <f:entry title="Product Name" field="productName">
-    <f:textbox />
-  </f:entry>
-  <f:entry title="Send Notification To" field="sendTos">
-    <f:textbox />
-  </f:entry>
+	<f:entry title="Bugzilla JDBC URL" field="url">
+		<f:textbox default="jdbc:mysql://192.168.130.161/bugzilla?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;useTimezone=true&amp;serverTimezone=CTT" />
+	</f:entry>
+	<f:entry title="Bugzilla JDBC User" field="user">
+		<f:textbox default="root" />
+	</f:entry>
+	<f:entry title="Bugzilla JDBC Password" field="password">
+		<f:textbox default="password" />
+	</f:entry>
+	<f:entry title="Bugzilla JDBC Driver" field="driver">
+		<f:textbox default="com.mysql.jdbc.Driver" />
+	</f:entry>
 </j:jelly>

@@ -1,5 +1,5 @@
 /*
- * $Id: BugzillaTaskBuilder.java 14 2014-12-04 06:51:44Z jierong $
+ * $Id: BugzillaTaskBuilder.java 103 2015-01-14 09:32:30Z jierong $
  * 
  * Copyright (c) 2001-2008 Accentrix Company Limited. All Rights Reserved.
  * 
@@ -60,12 +60,22 @@ public class BugzillaTaskBuilder extends Builder {
     private final String productName;
     private final String sendTos;
 
+    private final String url;
+    private final String user;
+    private final String password;
+    private final String driver;
+
     // Fields in config.jelly must match the parameter names in the
     // "DataBoundConstructor"
     @DataBoundConstructor
-    public BugzillaTaskBuilder(String productName, String sendTos) {
+    public BugzillaTaskBuilder(String productName, String sendTos, String url, String user,
+            String password, String driver) {
         this.productName = productName;
         this.sendTos = sendTos;
+        this.url = url;
+        this.user = user;
+        this.password = password;
+        this.driver = driver;
     }
 
     /**
@@ -77,6 +87,22 @@ public class BugzillaTaskBuilder extends Builder {
 
     public String getSendTos() {
         return sendTos;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getDriver() {
+        return driver;
     }
 
     @Override
@@ -128,7 +154,19 @@ public class BugzillaTaskBuilder extends Builder {
             Binding binding = new Binding();
             binding.setVariable("productName", productName);
             binding.setVariable("sendTos", sendTos);
+
+            binding.setVariable("url", url);
+            binding.setVariable("user", user);
+            binding.setVariable("password", password);
+            binding.setVariable("driver", driver);
+
             binding.setVariable("cssFile", path + File.separator + cssFile);
+
+            binding.setVariable("mailHost", getDescriptor().getMailHost());
+            binding.setVariable("mailProtocol", getDescriptor().getMailProtocol());
+            binding.setVariable("mailUser", getDescriptor().getMailUser());
+            binding.setVariable("mailPassword", getDescriptor().getMailPassword());
+
             gse.run(groovyFile, binding);
         } catch (ResourceException e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -174,14 +212,10 @@ public class BugzillaTaskBuilder extends Builder {
     // This indicates to Jenkins that this is an implementation of an extension
     // point.
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
-        /**
-         * To persist global configuration information, simply store it in a
-         * field and call save().
-         *
-         * <p>
-         * If you don't want fields to be persisted, use <tt>transient</tt>.
-         */
-        private boolean useFrench;
+        private String mailHost;
+        private String mailProtocol;
+        private String mailUser;
+        private String mailPassword;
 
         /**
          * In order to load the persisted global configuration, you have to call
@@ -227,26 +261,30 @@ public class BugzillaTaskBuilder extends Builder {
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-            // To persist global configuration information,
-            // set that to properties and call save().
-            useFrench = formData.getBoolean("useFrench");
-            // ^Can also use req.bindJSON(this, formData);
-            // (easier when there are many fields; need set* methods for this,
-            // like setUseFrench)
+            mailHost = formData.getString("mailHost");
+            mailProtocol = formData.getString("mailProtocol");
+            mailUser = formData.getString("mailUser");
+            mailPassword = formData.getString("mailPassword");
+
             save();
             return super.configure(req, formData);
         }
 
-        /**
-         * This method returns true if the global configuration says we should
-         * speak French.
-         *
-         * The method name is bit awkward because global.jelly calls this method
-         * to determine the initial state of the checkbox by the naming
-         * convention.
-         */
-        public boolean getUseFrench() {
-            return useFrench;
+        public String getMailHost() {
+            return mailHost;
         }
+
+        public String getMailProtocol() {
+            return mailProtocol;
+        }
+
+        public String getMailUser() {
+            return mailUser;
+        }
+
+        public String getMailPassword() {
+            return mailPassword;
+        }
+
     }
 }

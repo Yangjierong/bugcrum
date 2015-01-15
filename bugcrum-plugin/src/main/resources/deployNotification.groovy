@@ -3,6 +3,7 @@ import groovy.sql.Sql;
 //@GrabConfig(systemClassLoader=true)
 //@Grab('mysql:mysql-connector-java:5.1.31')
 
+
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.DatabaseMetaData
@@ -37,7 +38,8 @@ def product = sql.firstRow('SELECT * FROM products WHERE name =?', [productName]
 def reportDir = 'target'
 
 generateHTML(sql, new Date(), reportDir, productName, product.id)
-sendMail(sql, productName, reportDir)
+
+sendMail(sql, productName, reportDir, mailHost, mailProtocol, mailUser, mailPassword)
 
 //-------------------------class & method-----------------------------------------------------------
 
@@ -98,16 +100,16 @@ def generateHTML(sql, generateDate, reportDir, productName, productId){
     f.write(sw.toString())
 }
 
-def sendMail(sql, productName, reportDir){
+def sendMail(sql, productName, reportDir, mailHost, mailProtocol, mailUser, mailPassword){
 
 	println("Sending mail...");
 	println('NOTE: need to copy mail.jar to $GROOVY_HOME/lib/');
 
 	Properties props = new Properties();
-	props.setProperty("mail.transport.protocol", "smtp");
-	props.setProperty("mail.host", "mail.accentrix.com");
-	props.setProperty("mail.user", "donotreply@accentrix.com");
-	props.setProperty("mail.password", "140123");
+	props.setProperty("mail.transport.protocol", mailProtocol);
+	props.setProperty("mail.host", mailHost);
+	props.setProperty("mail.user", mailUser);
+	props.setProperty("mail.password", mailPassword);
     
 	props.setProperty("mail.mime.charset", "UTF-8");
 
@@ -117,7 +119,7 @@ def sendMail(sql, productName, reportDir){
 
 	MimeMessage message = new MimeMessage(mailSession);
 	message.setSubject("${productName} Task Board");
-	message.setFrom(new InternetAddress("donotreply@accentrix.com"));
+	message.setFrom(new InternetAddress(mailUser));
 	message.setSentDate(new Date());
     
     sendTos.split(',').each{email ->
