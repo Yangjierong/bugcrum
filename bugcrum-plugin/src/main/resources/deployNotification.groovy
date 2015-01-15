@@ -39,8 +39,11 @@ def reportDir = 'target'
 
 generateHTML(sql, new Date(), reportDir, productName, product.id)
 
-sendMail(sql, productName, reportDir, mailHost, mailProtocol, mailUser, mailPassword)
-
+try{
+    sendMail(sql, productName, reportDir, mailHost, mailProtocol, mailUser, mailPassword)
+}catch(e){
+    println e.getMessage()
+}
 //-------------------------class & method-----------------------------------------------------------
 
 
